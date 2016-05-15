@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 //****************
 // 2. Stel middleware in voor serveren van statische bestanden (HTML, CSS, images)
 //****************
-//app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 app.get('/api', function (req, res) {
     res.send('Gebruik: stuur een POST-request met user-gegevens(bv "username" en "email") naar http://localhost:3000/user')
@@ -35,34 +35,40 @@ app.get('/api', function (req, res) {
 //****************
 // 3. De route voor vewerken van AngularJS - POST-request
 //****************
-var user = {};
+var rgb = {};
 app.post('/user', function (req, res) {
     // verwerk binnenkomende request. We gaan er van uit
     // dat de parameter 'username' en 'email' aanwezig zijn.
     // TODO: error checking!
-    winston.debug('Request for User received');
-    user.username = req.body.username;
-    user.email = req.body.email;
+    winston.debug(JSON.stringify(req.body));
+    var msg = '&&{"node":"0000","rgb":[' + req.body.red + ',' + req.body.green + ',' + req.body.blue + ']}##';
+    winston.debug('message = ' + msg);
+    udp.transmitMsg(msg);
+    
+    rgb.red = req.body.red;
+    rgb.green = req.body.green;
+    rgb.blue = req.body.blue;
+    winston.debug(rgb);
     // In een echte app: HIER valideren en naar de
     // database voor live data. Voor nu:
     // Echo het user-object naar de client
     // Eventueel;
     //user.token = "1233434536456.778789900";
-    res.json(user);
+    res.json(rgb);
 
 });
 
 function initialize(){
   console.log('Boot Home automation server');
   console.log(params);
-  db_fd = db.initialise(params.database);
+  //db_fd = db.initialise(params.database);
 
   app.listen(3000, function () {
       console.log('Server gestart op poort 3000...');
   });
 
   udp.initialize();
-  db.findInDb('nodes', {uuid:'0001'});
+  //db.findInDb('nodes', {uuid:'0001'});
 };
 
 initialize();
