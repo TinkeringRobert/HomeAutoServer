@@ -1,0 +1,33 @@
+[33m[nodemon] 1.9.2[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node app.js`[39m
+Boot Home automation server
+{ database: { path: 'E:/test_db.json' },
+  udp_server: 
+   { rpi_ip_host: '255.255.255.255',
+     win_ip_host: '0.0.0.0',
+     port_nr: 33333 } }
+Server gestart op poort 3000...
+info: UDP Server listening on 255.255.255.255:33333
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.32,"hum":30.62}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.32,"hum":30.45}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.32,"hum":30.37}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.35,"hum":30.32}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.37,"hum":30.3}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.38,"hum":30.28}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.4,"hum":30.27}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.43,"hum":30.18}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.45,"hum":30.17}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.47,"hum":30.18}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.48,"hum":30.13}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.12}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.15}}
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.15}}

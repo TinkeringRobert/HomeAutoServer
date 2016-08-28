@@ -1,0 +1,287 @@
+[33m[nodemon] 1.9.2[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node app.js`[39m
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+    at Error (native)
+Boot Home automation server
+{ database: { path: 'E:/test_db.json' },
+  udp_server: 
+   { rpi_ip_host: '255.255.255.255',
+     win_ip_host: '0.0.0.0',
+     port_nr: 33333 } }
+Server gestart op poort 3000...
+info: UDP Server listening on 255.255.255.255:33333
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+[33m[nodemon] 1.9.2[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node app.js`[39m
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+    at Error (native)
+Boot Home automation server
+{ database: { path: 'E:/test_db.json' },
+  udp_server: 
+   { rpi_ip_host: '255.255.255.255',
+     win_ip_host: '0.0.0.0',
+     port_nr: 33333 } }
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE :::3000
+    at Object.exports._errnoException (util.js:870:11)
+    at exports._exceptionWithHostPort (util.js:893:20)
+    at Server._listen2 (net.js:1234:14)
+    at listen (net.js:1270:10)
+    at Server.listen (net.js:1366:5)
+    at EventEmitter.listen (/home/automat/HomeAutoServer/src/node_modules/express/lib/application.js:617:24)
+    at initialize (/home/automat/HomeAutoServer/src/app.js:66:7)
+    at Object.<anonymous> (/home/automat/HomeAutoServer/src/app.js:74:1)
+    at Module._compile (module.js:409:26)
+    at Object.Module._extensions..js (module.js:416:10)
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+debug: 19.52 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.08}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: {"red":"50","green":"10","blue":"50"}
+debug: message = &&{"node":"0000","rgb":[50,10,50]}##
+debug:  red=50, green=10, blue=50
+UDP message sent to undefined:33333
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.07
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.07}}
+debug: 19.52 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.03}}
+debug: 19.52 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.03}}
+debug: 19.52 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.03}}
+debug: 19.52 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.03}}
+debug: 19.52 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.03}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+[33m[nodemon] 1.9.2[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching: *.*[39m
+[32m[nodemon] starting `node app.js`[39m
+events.js:141
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: EBADF: bad file descriptor, read
+    at Error (native)
+Boot Home automation server
+{ database: { path: 'E:/test_db.json' },
+  udp_server: 
+   { rpi_ip_host: '255.255.255.255',
+     win_ip_host: '0.0.0.0',
+     port_nr: 33333 } }
+Server gestart op poort 3000...
+info: UDP Server listening on 255.255.255.255:33333
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.1
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.1}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.08
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.08}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.03
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.03}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.5 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.5,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.05
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.05}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
+debug: 19.52 30.02
+info: received: {"node":"JE8ORH3T5OF73111","values":{"temp":19.52,"hum":30.02}}
