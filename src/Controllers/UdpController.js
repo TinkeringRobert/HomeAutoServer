@@ -1,5 +1,5 @@
 var PORT = 33333;
-var SEND_PORT = 33333;
+var SEND_PORT = 22222;
 var isWin = /^win/.test(process.platform);
 var HOST = '';
 if (isWin){var RECV_HOST = '0.0.0.0'; var SEND_HOST = '255.255.255.255';}
@@ -8,33 +8,22 @@ else{var HOST = '255.255.255.255';}
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
 var winston = require('winston');
+var broker;
 //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
-var node = require('./NodeManager');
+//var node = require('./NodeManager');
 var count = 0;
-module.exports = {
-  initialize: function()
-  {
-    server.bind(PORT, HOST);
-  },
 
-  transmitMsg: function(msg){
-    var message = new Buffer(msg);
-    count++;
-    setTimeout(function() {
-      var client = dgram.createSocket('udp4');
-      client.bind();
-      client.on("listening", function () {
-        client.setBroadcast(true);
-        client.send(message, 0, message.length, SEND_PORT, SEND_HOST, function(err, bytes) {
-            if (err) {
-              client.close();
-              throw err;
-            }
-            console.log('UDP message sent to ' + SEND_HOST +':'+ SEND_PORT);
-            client.close();
-        });
-      });
-    }, 500);
+module.exports = {
+  initialize: function(Broker)
+  {
+    broker = Broker;
+    console.log('Starting : UdpController');
+
+    broker.subscribe('transmitMsg', function(event, payload) {
+      transmitMsg(payload.udpMsg);
+    });
+
+    server.bind(PORT, HOST);
   }
 }
 
@@ -45,8 +34,9 @@ server.on('listening', function () {
 
 server.on('message', function (message, remote) {
     var date = new Date();
+    date.setMilliseconds(0);
     //winston.debug(date.toLocaleString() + ' at recv:' + remote.address + ':' + remote.port +' - ' + message);
-    //winston.debug(message.length);
+    winston.debug(remote);
 
     // Parse the received udp message to JSON format
     var udp_res = parse_udp_message(message);
@@ -55,31 +45,50 @@ server.on('message', function (message, remote) {
 
     if (udp_res !== null)
     {
+      winston.info('received: ' + JSON.stringify(udp_res));
       winston.debug(udp_res.values.temp + ' ' + udp_res.values.hum);
-      var message = new Buffer('&&{"node":"0000","rgb":[' + udp_res.values.temp + ',' +udp_res.values.hum+ ',0]}##');
-      count++;
-      setTimeout(function() {
-        var client = dgram.createSocket('udp4');
-        client.bind();
-        client.on("listening", function () {
-          client.setBroadcast(true);
-          client.send(message, 0, message.length, SEND_PORT, SEND_HOST, function(err, bytes) {
-              if (err) {
-                client.close
-                throw err;
-              }
-              //console.log('UDP message sent to ' + SEND_HOST +':'+ SEND_PORT);
-              client.close();
-          });
-        });
-      }, 500);
+      // var message = new Buffer('&&{"node":"0000","rgb":[' + udp_res.values.temp + ',' +udp_res.values.hum+ ',0]}##');
+      // count++;
+      // setTimeout(function() {
+      //   var client = dgram.createSocket('udp4');
+      //   client.bind();
+      //   client.on("listening", function () {
+      //     client.setBroadcast(true);
+      //     client.send(message, 0, message.length, SEND_PORT, SEND_HOST, function(err, bytes) {
+      //         if (err) {
+      //           client.close();
+      //           throw err;
+      //         }
+      //         //console.log('UDP message sent to ' + SEND_HOST +':'+ SEND_PORT);
+      //         client.close();
+      //     });
+      //   });
+      // }, 500);
+      broker.publish('handleUdpNodeMessage',
+                     {udpMsg: udp_res, date: date},
+                     {async: true});
+      // node.handleUdpNodeMessage(udp_res, date);
     }
-
-
-    winston.info('received: ' + JSON.stringify(udp_res));
-
-    //node.handleUdpNodeMessage(udp_res);
 });
+
+function transmitMsg(msg){
+  winston.debug('transmitMsg');
+  var message = new Buffer(msg);
+  var client = dgram.createSocket('udp4');
+  client.bind();
+  client.on("listening", function () {
+    client.setBroadcast(true);
+
+    client.send(message, 0, message.length, SEND_PORT, '10.0.0.6', function(err, bytes) {
+        if (err) {
+          client.close();
+          throw err;
+        }
+        console.log('UDP message sent to ' + SEND_HOST +':'+ SEND_PORT);
+        client.close();
+    });
+  });
+};
 
 function parse_udp_message(message)
 {

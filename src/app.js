@@ -6,15 +6,16 @@ var jwt = require('jwt-simple');
 var _ = require('lodash');
 var app = express();
 var winston = require('winston');
+var broker = require('mercury-broker');
+var db = require('./Controllers/Database');
+var moment = require('moment');
 //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
 winston.level = 'silly';
 
 // Application settings
 var params = require('./Config/Settings');
 // Local requires
-var udp = require('./Controllers/UdpController');
-var db = require('./Controllers/Database');
-var db_fd = "";
+var modules = require('./Controllers/ModuleInit');
 //*******************
 // 1. Parse forms & JSON in body
 //*******************
@@ -32,6 +33,21 @@ app.get('/api', function (req, res) {
     res.send('Gebruik: stuur een POST-request met user-gegevens(bv "username" en "email") naar http://localhost:3000/user')
 });
 
+app.get('/nodes', function (req, res) {
+    var page = '';
+    page += '<head><meta http-equiv="refresh" content="5" ><style>table{font-family: arial, sans-serif;border-collapse: collapse;width: 100%;} td,th{border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #dddddd;}</style></head>';
+    page += '<h1>Status Page</h1>';
+
+    var result = db.getElementsFromDb('nodes', '');
+    page += '<table style="width:100%"><tr><th>Node ID</th><th>db id</th><th>LatestDate</th></tr>';
+
+    result.forEach(function(node){
+      page += '<tr><td>' + node.uuid + '</td><td>' + node.id + '</td><td>' + moment(node.latestDate).format("YYYY-MM-DD") + ' - ' + moment(node.latestDate).format("HH:mm") + '</td>';
+    });
+    page += '</table>';
+    winston.debug(result);
+    res.send(page)
+});
 //****************
 // 3. De route voor vewerken van AngularJS - POST-request
 //****************
@@ -43,32 +59,26 @@ app.post('/user', function (req, res) {
     winston.debug(JSON.stringify(req.body));
     var msg = '&&{"node":"0000","rgb":[' + req.body.red + ',' + req.body.green + ',' + req.body.blue + ']}##';
     winston.debug('message = ' + msg);
-    udp.transmitMsg(msg);
-    
+
+    broker.publish('transmitMsg',{udpMsg: msg},{async:true});
+
     rgb.red = req.body.red;
     rgb.green = req.body.green;
     rgb.blue = req.body.blue;
     winston.debug(rgb);
-    // In een echte app: HIER valideren en naar de
-    // database voor live data. Voor nu:
-    // Echo het user-object naar de client
-    // Eventueel;
-    //user.token = "1233434536456.778789900";
     res.json(rgb);
-
 });
 
 function initialize(){
   console.log('Boot Home automation server');
   console.log(params);
-  //db_fd = db.initialise(params.database);
 
+  modules.initialize(params, broker);
+
+  // Activate website
   app.listen(3000, function () {
       console.log('Server gestart op poort 3000...');
   });
-
-  udp.initialize();
-  //db.findInDb('nodes', {uuid:'0001'});
 };
 
 initialize();
