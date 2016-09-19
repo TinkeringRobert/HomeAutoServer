@@ -42,7 +42,16 @@ app.get('/nodes', function (req, res) {
     page += '<table style="width:100%"><tr><th>Node ID</th><th>db id</th><th>LatestDate</th></tr>';
 
     result.forEach(function(node){
-      page += '<tr><td>' + node.uuid + '</td><td>' + node.id + '</td><td>' + moment(node.latestDate).format("YYYY-MM-DD") + ' - ' + moment(node.latestDate).format("HH:mm") + '</td>';
+      winston.debug((moment() - moment(node.latestDate))/1000);
+      // Set color if time is longer then 10 minutes
+      if((moment() - moment(node.latestDate))/1000 >= 10*60)
+      {
+        page += '<tr><td><font color="red">' + node.uuid + '</td><td><font color="red">' + node.id + '</td><td><font color="red">' + moment(node.latestDate).format("YYYY-MM-DD") + ' - ' + moment(node.latestDate).format("HH:mm") + '</td>';
+
+      }
+      else {
+        page += '<tr><td>' + node.uuid + '</td><td>' + node.id + '</td><td>' + moment(node.latestDate).format("YYYY-MM-DD") + ' - ' + moment(node.latestDate).format("HH:mm") + '</td>';
+      }
     });
     page += '</table>';
     winston.debug(result);
