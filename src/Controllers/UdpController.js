@@ -1,29 +1,44 @@
-var PORT = 33333;
-var SEND_PORT = 22222;
-var isWin = /^win/.test(process.platform);
-var HOST = '';
-if (isWin){var RECV_HOST = '0.0.0.0'; var SEND_HOST = '255.255.255.255';}
-else{var HOST = '255.255.255.255';}
-
 var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
 var winston = require('winston');
 var broker;
 //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
-//var node = require('./NodeManager');
 var count = 0;
 
+var udp_server_initalized = false;
+var recv_port = 33333;
+var send_port = 22222;
+var recv_host = null;
+var send_host = null;
+
 module.exports = {
-  initialize: function(Broker)
+  initialize: function(params, Broker)
   {
     broker = Broker;
     console.log('Starting : UdpController');
+
+    recv_host = params.udp_server.recv_host;
+    recv_port = params.udp_server.recv_port;
+
+    send_host = params.udp_server.send_host;
+    send_port = params.udp_server.send_port;
+
+    console.log('Settings : Recv Host : ' + recv_host);
+    console.log('Settings : Recv Port : ' + recv_port);
+    console.log('');
+    console.log('Settings : Send Host : ' + send_host);
+    console.log('Settings : Send Port : ' + send_port);
 
     broker.subscribe('transmitMsg', function(event, payload) {
       transmitMsg(payload.udpMsg);
     });
 
-    server.bind(PORT, HOST);
+    // Bind to the new server host and port
+    server.bind(recv_port, recv_host);
+
+    udp_server_initalized = true;
+    console.log('Started  : UdpController');
+    console.log('-------------------------------------------');
   }
 }
 
@@ -46,7 +61,8 @@ server.on('message', function (message, remote) {
     if (udp_res !== null)
     {
       winston.info('received: ' + JSON.stringify(udp_res));
-      winston.debug(udp_res.values.temp + ' ' + udp_res.values.hum);
+      //winston.debug(udp_res.values.temp + ' ' + udp_res.values.hum);
+
       // var message = new Buffer('&&{"node":"0000","rgb":[' + udp_res.values.temp + ',' +udp_res.values.hum+ ',0]}##');
       // count++;
       // setTimeout(function() {
@@ -73,18 +89,23 @@ server.on('message', function (message, remote) {
 
 function transmitMsg(msg){
   winston.debug('transmitMsg');
+  if (send_host === null || udp_server_initalized === false){
+    winston.error("Udp transmit message call not handled (check host and/or initialisation)");
+    return;
+  }
+
   var message = new Buffer(msg);
   var client = dgram.createSocket('udp4');
   client.bind();
   client.on("listening", function () {
     client.setBroadcast(true);
 
-    client.send(message, 0, message.length, SEND_PORT, '10.0.0.6', function(err, bytes) {
+    client.send(message, 0, message.length, send_port, send_host, function(err, bytes) {
         if (err) {
           client.close();
           throw err;
         }
-        console.log('UDP message sent to ' + SEND_HOST +':'+ SEND_PORT);
+        console.log('UDP message sent to ' + send_host +':'+ send_port);
         client.close();
     });
   });
@@ -120,9 +141,10 @@ function parse_udp_message(message)
         //winston.silly(str_msg);
 
         var received = JSON.parse(str_msg);
-        if(received.node === "0000"){
+        if(received.node === undefined || received.node === "0000"){
           return null;
         }
+
         //winston.silly('Parsed to JSON');
         //winston.silly(received);
         return received;
