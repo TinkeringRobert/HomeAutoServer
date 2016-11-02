@@ -1,0 +1,39 @@
+﻿<div>
+	<h1>Energy Test Page</h1>
+	<ul ng-repeat="power in e.powers">
+		{{ power.timestamp }} |&#09;| {{ power.kwh_meter }} |&#09;| {{ power.hh_meter }} |&#09;| {{ power.pv_meter }}<br>
+	</ul>
+	<div style="visibility: hidden">
+		<table class="table">
+		  <thead>
+		    <tr>
+					<th>#</th>
+					<th>time</th>
+		      <th>kWh meter</th>
+		      <th>household</th>
+		      <th>pv production</th>
+		    </tr>
+		  </thead>
+			<tbody>
+				<tr>
+					<th scope="row">1</th>
+					<td>bla</td>
+					<td>die</td>
+					<td>ble</td>
+					<td>bloe</td>
+				</tr>
+				<ul ng-repeat="power in e.powers">
+					<tr>
+						{{power}}
+						<th scope="row">{{ $index + 2 }}</th>
+						<td>{{ power.timestamp }}</td>
+						<td>{{ power.kwh_meter }}</td>
+						<td>{{ power.hh_meter }}</td>
+						<td>{{ power.pv_meter }}</td>
+					</tr>
+				</ul>
+			</tbody>
+		</table>
+	<h2>Power</h2>
+	</div>
+</div>

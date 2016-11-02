@@ -1,6 +1,7 @@
 # Node modules #
 ################
 src/node_modules
+src/databases
 
 # Compiled source #
 ###################
