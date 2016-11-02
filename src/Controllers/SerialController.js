@@ -37,15 +37,16 @@ module.exports = {
       var date = new Date();
       date.setMilliseconds(0);
 
-      console.log("Message ::" + message.toString() + "::");
+      //winston.debug("Message ::" + message.toString() + "::");
       parse_serial_msg(message, function(message){
-
-        winston.debug("Result == " + message);
+        //winston.debug("Result == " + message);
 
         if (message !== null && message !== undefined){
-          if(message.nodeId !== undefined){
+          var sen_msg = JSON.parse(message);
+          sen_msg.date = date;
+          if(sen_msg.nodeId !== undefined){
             broker.publish('handleSerialNodeMessage',
-                          {serialMsg: JSON.parse(message), date: date},
+                          {serialMsg: sen_msg},
                           {async: true});
           }
         }
@@ -60,30 +61,30 @@ module.exports = {
 
 function parse_serial_msg(message, callback){
   if (validator.isJSON(message)){
-    winston.silly("Serial message is a valid JSON format");
+    //winston.silly("Serial message is a valid JSON format");
     return callback(message);
   }
 
-  winston.silly("Serial message is not a JSON message");
+  //winston.silly("Serial message is not a JSON message");
   var start_index = message.toString().indexOf('&&');
   var end_index = message.toString().indexOf('##');
 
   if(start_index == -1) {
-    winston.error('Serial msg start not found');
+    //winston.debug('Serial msg start not found');
     return callback(null);
   }
   if(end_index == -1) {
-    winston.error('Serial msg end not found');
+    //winston.debug('Serial msg end not found');
     return callback(null);
   }
 
   if(start_index > -1 && end_index > -1)
   {
-    winston.silly('Serial msg substring');
+    //winston.silly('Serial msg substring');
     var str_msg = message.toString().substring(start_index+2, end_index);
-    winston.silly(str_msg);
+    //winston.silly(str_msg);
     if (validator.isJSON(str_msg)){
-      winston.silly("Serial message is a valid JSON format");
+      //winston.silly("Serial message is a valid JSON format");
       return callback(str_msg);
     }
   }

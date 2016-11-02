@@ -137,6 +137,34 @@ module.exports = {
     });;
   },
 
+  getEnergyMeterValue: function(limit, callback){
+    if(db === null || db_initalized === false){
+      winston.error("Database call not handled db:" + db + " init:" + (db_initalized===true ? "true" : "false"));
+      return callback(undefined);
+    }
+    var query = "SELECT * FROM energy_meter ORDER BY timestamp DESC LIMIT ?";
+    db.serialize(function() {
+      db.all(query, limit, function(err, rows) {
+        if( err !== null)
+        {
+          console.log("ERR: " + err);
+          callback(undefined);
+          //db.close();
+          return;
+        }
+        //console.log(rows);
+        if (rows !== undefined && rows.length > 0)
+        {
+          //console.log(row.id + ": " + row.node_id + ": ", row.last_seen);
+          callback(rows);
+        }
+        else {
+          callback(undefined);
+        }
+      });
+    });;
+  },
+
   storeSensorValue: function(tableName, nodeId, value, reportDate){
     console.log( "Store " + value + " for node with id :" + nodeId + " and date :" + reportDate + " into " + tableName);
     if(db === null || db_initalized === false){
@@ -147,6 +175,25 @@ module.exports = {
     var query = "INSERT INTO " + tableName + " (node_id, value, timestamp) VALUES (?,?,?)";
     var stmt = db.prepare(query);
     stmt.run(nodeId, value, reportDate, function(err) {
+      if (err)
+      {
+        console.log(err + " : ");
+      }
+    });
+    stmt.finalize();
+  },
+
+  storeEnergyMeterValues: function(tableName, nodeId, energy_meter, house_hold, photo_voltaic, reportDate){
+
+    console.log( "Store " + energy_meter + "," + house_hold +  "," + photo_voltaic + " for node with id :" + nodeId + " and date :" + reportDate + " into " + tableName);
+    if(db === null || db_initalized === false){
+      winston.error("Database call not handled db:" + db + " init:" + (db_initalized===true ? "true" : "false"));
+      return callback(undefined);
+    }
+
+    var query = "INSERT INTO " + tableName + " (node_id, kwh_meter, hh_meter, pv_meter, timestamp) VALUES (?,?,?,?,?)";
+    var stmt = db.prepare(query);
+    stmt.run(nodeId, energy_meter, house_hold, photo_voltaic, reportDate, function(err) {
       if (err)
       {
         console.log(err + " : ");

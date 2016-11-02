@@ -1,102 +1,30 @@
 <!DOCTYPE html>
+<!-- Voorbeeld van meerdere controllers in 1 app. Met aparte js-bestanden en een bootstrapper app.js -->
+<!-- 1. Definieer een modulenaam in HTML -->
 <html ng-app="myApp">
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>POST-data naar een server</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css"/>
+<head>
+	<title>Angular JS Template</title>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<link href="css/bootstrap.css" rel="stylesheet" />
+	<link href="css/styles.css" rel="stylesheet" />
 </head>
-<body>
-<div class="container" ng-controller="myController as vm">
-  <div style="width: 100%">
-    <div style="float:left; width: 50%">
-      <h3>Color Formulier</h3>
+<body ng-controller="personController">
+  <h2>Test Page W.I.P.</h2>
+	<div class="container">
+		<a href="#/nodes">Nodes </a> | <a href="#/steden">Steden </a> | <a href="#/energy">Energy </a>
+		<!-- De view waarin de losse partials/html-bestanden geinjecteerd worden -->
+		<div ng-view></div>
+	</div>
 
-      <form id="color-form" role="form" style="display: block;">
-        <div class="form-group">
-          <h4>Red</h4>
-          <rzslider rz-slider-model="vm.valueSlider.redValue" rz-slider-options="vm.valueSlider.options"></rzslider>
-        </div>
-        <div class="form-group">
-          <h4>GReen</h4>
-          <rzslider rz-slider-model="vm.valueSlider.greenValue" rz-slider-options="vm.valueSlider.options"></rzslider>
-        </div>
-        <div class="form-group">
-          <h4>Blue</h4>
-          <rzslider rz-slider-model="vm.valueSlider.blueValue" rz-slider-options="vm.valueSlider.options"></rzslider>
-        </div>
-        <div class="form-group">
-            <button class="form-control btn btn-primary"
-                    ng-click="vm.doSetColor()">Set Color
-            </button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div style="clear:both"></div>
-</div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
-<script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
-
-<script>
-    (function () {
-        'use strict';
-        angular.module('myApp', ['rzModule', 'ui.bootstrap'])
-               .controller('myController', myController);
-
-        myController.$inject = ['$http'];
-        function myController($http) {
-            var vm     = this;
-
-            vm.onSliderChange = function (sliderId) {
-              console.log("onSliderChange");
-              console.log(vm.valueSlider);
-              vm.doSetColor();
-            };
-
-            vm.valueSlider = {
-              redValue: 100,
-              blueValue: 100,
-              greenValue: 100,
-              options: {
-                  floor: 0,
-                  ceil: 255,
-                  step: 1,
-                  id: 'colorSlider',
-                  onChange: vm.onSliderChange
-              }
-            };
-
-            vm.doSetColor = function () {
-              var url   = 'http://10.0.0.101:3000/user';
-              console.log("params:");
-              var red   = vm.valueSlider.redValue;
-              var green = vm.valueSlider.greenValue;
-              var blue  = vm.valueSlider.blueValue;
-              console.log("params:" + vm.valueSlider.redValue + ":" + vm.valueSlider.greenValue + ":" + vm.valueSlider.blueValue);
-              console.log("params:" + red + ":" + green + ":" + blue);
-              $http({
-                  method  : 'post',
-                  headers : {
-                      'Content-Type' : 'application/json'
-                  },
-                  url     : url,
-                  data    : {
-                      "red"   : red,
-                      "green" : green,
-                      "blue"  : blue
-                  }
-              }).then(function (response) {
-                  console.log(response.data);
-                  vm.response = response.data;
-              }).catch(function (err) {
-                  vm.response = err;
-              });
-            }
-        }
-    })();
-</script>
+	<!-- Scripts below here -->
+	<script type="text/javascript" src="js/vendor/angular.min.js"></script>
+	<script type="text/javascript" src="js/vendor/angular-route.min.js"></script>
+	<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
+	<!-- Custom Scripts -->
+	<script type="text/javascript" src="js/09_app.js"></script>
+	<script type="text/javascript" src="js/09_ng_personController.js"></script>
+	<script type="text/javascript" src="js/09_ng_citiesController.js"></script>
+	<script type="text/javascript" src="js/09_ng_detailController.js"></script>
+	<script type="text/javascript" src="js/energyController.js"></script>
 </body>
 </html>

@@ -26,6 +26,8 @@ module.exports = {
       winston.info("Step 5 : Seed the database     :: " + (err!==undefined ? err : "Success"));
       addHumidityNode(db);
       winston.info("Step 5 : Seed the database     :: " + (err!==undefined ? err : "Success"));
+      addEnergyMeterDb(db);
+      winston.info("Step 5 : Seed the database     :: " + (err!==undefined ? err : "Success"));
     });
     winston.info("Step 6 : Close database file   :: Success");
     db.close();
@@ -68,4 +70,15 @@ function addHumidityNode(db){
         "node_id   CHAR(4)   NOT NULL, " +
         "timestamp DATETIME, " +
         "value     REAL)");
+}
+
+function addEnergyMeterDb(db){
+  winston.info("Add energy_meter database table");
+  db.run("CREATE TABLE IF NOT EXISTS energy_meter " +
+        "(id       INTEGER            PRIMARY KEY   AUTOINCREMENT, " +
+        "node_id   CHAR(4)   NOT NULL, " +
+        "timestamp DATETIME, " +
+        "kwh_meter REAL," +
+        "hh_meter  REAL," +
+        "pv_meter  REAL)");
 }

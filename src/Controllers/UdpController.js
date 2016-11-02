@@ -51,7 +51,7 @@ server.on('message', function (message, remote) {
     var date = new Date();
     date.setMilliseconds(0);
     //winston.debug(date.toLocaleString() + ' at recv:' + remote.address + ':' + remote.port +' - ' + message);
-    winston.debug(remote);
+    //winston.debug(remote);
 
     // Parse the received udp message to JSON format
     var udp_res = parse_udp_message(message);
@@ -60,28 +60,11 @@ server.on('message', function (message, remote) {
 
     if (udp_res !== null)
     {
-      winston.info('received: ' + JSON.stringify(udp_res));
-      //winston.debug(udp_res.values.temp + ' ' + udp_res.values.hum);
+      //winston.info('received: ' + JSON.stringify(udp_res));
+      udp_res.date = date;
 
-      // var message = new Buffer('&&{"node":"0000","rgb":[' + udp_res.values.temp + ',' +udp_res.values.hum+ ',0]}##');
-      // count++;
-      // setTimeout(function() {
-      //   var client = dgram.createSocket('udp4');
-      //   client.bind();
-      //   client.on("listening", function () {
-      //     client.setBroadcast(true);
-      //     client.send(message, 0, message.length, SEND_PORT, SEND_HOST, function(err, bytes) {
-      //         if (err) {
-      //           client.close();
-      //           throw err;
-      //         }
-      //         //console.log('UDP message sent to ' + SEND_HOST +':'+ SEND_PORT);
-      //         client.close();
-      //     });
-      //   });
-      // }, 500);
       broker.publish('handleUdpNodeMessage',
-                     {udpMsg: udp_res, date: date},
+                     {udpMsg: udp_res},
                      {async: true});
       // node.handleUdpNodeMessage(udp_res, date);
     }

@@ -9,6 +9,7 @@
   "author": "Robert Kappert",
   "license": "MIT",
   "dependencies": {
+    "angular-chart.js": "^1.0.3",
     "body-parser": "^1.12.4",
     "express": "^4.12.4",
     "file-sync": "0.0.2",
