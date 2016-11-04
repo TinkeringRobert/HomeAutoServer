@@ -1,6 +1,6 @@
 ﻿(function () {
 	// 1. Definieer de module/app in dit bestand en voeg dependencies toe
-	angular.module('myApp', ['ngRoute']);
+	angular.module('myApp', ['ngRoute', 'nvd3']);
 
 	// 2. Routes configureren
 	angular.module('myApp')

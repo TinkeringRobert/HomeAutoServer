@@ -1,9 +1,12 @@
 ﻿<div>
 	<h1>Energy Test Page</h1>
-	<ul ng-repeat="power in e.powers">
-		{{ power.timestamp }} |&#09;| {{ power.kwh_meter }} |&#09;| {{ power.hh_meter }} |&#09;| {{ power.pv_meter }}<br>
-	</ul>
-	<div style="visibility: hidden">
+	<div>
+		<select ng-change="e.selectionChanged(selectedItem);" ng-model="selectedItem">
+			<option ng-repeat="amount in e.amounts">{{amount}}</option>
+		</select>
+	</div>
+	<div>
+		<nvd3 options="e.options" data="e.data" api="e.api" xAxisTickFormat="xAxisTickFormat_Date_Format()" class="with-3d-shadow with-transitions"></nvd3>
 		<table class="table">
 		  <thead>
 		    <tr>
@@ -15,25 +18,14 @@
 		    </tr>
 		  </thead>
 			<tbody>
-				<tr>
-					<th scope="row">1</th>
-					<td>bla</td>
-					<td>die</td>
-					<td>ble</td>
-					<td>bloe</td>
-				</tr>
-				<ul ng-repeat="power in e.powers">
-					<tr>
-						{{power}}
-						<th scope="row">{{ $index + 2 }}</th>
+				<tr ng-repeat="power in e.powers">
+						<th scope="row">{{ $index }}</th>
 						<td>{{ power.timestamp }}</td>
 						<td>{{ power.kwh_meter }}</td>
 						<td>{{ power.hh_meter }}</td>
 						<td>{{ power.pv_meter }}</td>
-					</tr>
-				</ul>
+				</tr>
 			</tbody>
 		</table>
-	<h2>Power</h2>
 	</div>
 </div>

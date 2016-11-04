@@ -35,6 +35,9 @@ module.exports = {
   }
 }
 
+// -------------------------------------------------
+// Database table creators
+// -------------------------------------------------
 function addNetworkNode(db){
   winston.info("Add network_node database table");
 

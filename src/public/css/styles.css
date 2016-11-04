@@ -52,3 +52,7 @@ ul li{
 .slide-animate.ng-leave {
 	right: 0;
 }
+
+.dashed {
+    stroke-dasharray: 5,5;
+}

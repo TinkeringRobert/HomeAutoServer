@@ -10,6 +10,6 @@ module.exports = {
   },
   serial_port: {
     name_port: '/dev/ttyACM0',
-    baud_rate: 57600
+    baud_rate: 115200
   }
 }

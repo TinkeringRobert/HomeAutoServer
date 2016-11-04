@@ -1,16 +1,12 @@
 var http = require('http');
 var _ = require('lodash');
+var moment = require('moment');
 
 module.exports = function(app, nodesDb) {
 
-	// create todo and send back all todos after creation
-	app.get('/meterdata', function(req, res) {
-		console.log("GET :: Current meterdata");
-		return res.send([{"id":1,"power":1000},{"id":2,"power":1500}]);
-  });
 
 	// create todo and send back all todos after creation
-	app.get('/energymeterdata', function(req, res) {
+	app.get('/energymeterdata/:amount', function(req, res) {
 		console.log("GET :: Current meterdata");
 		var amount = 30;
 
@@ -19,6 +15,9 @@ module.exports = function(app, nodesDb) {
 		}
 
 		nodesDb.getEnergyMeterValue(amount, function(result){
+			_.forEach(result, function(field) {
+				field.utc = moment.utc(field.timestamp).valueOf();
+			});
 			return res.send(result);
 		});
 	});
