@@ -1,0 +1,17 @@
+{
+  "name": "infrastructure",
+  "version": "0.0.2",
+  "description": "Infra structure application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Kappert",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mqtt": "^2.1.3",
+    "sqlite3": "^3.1.8",
+    "winston": "^2.2.0"
+  }
+}
