@@ -1,20 +1,35 @@
 const path = require('path');
+var mqtt = require('mqtt');
 var sqlite3 = require('sqlite3').verbose();
 var winston = require('winston');
+
 var db = null;
 var db_initalized = false;
 
 module.exports = {
-  initialize: function(params, Broker)
+  initialize: function(params)
   {
     console.log("Nodes Database initialise");
     const dbPath = path.resolve(__dirname, params.database.nodes)
-
+		var client  = mqtt.connect(params.mqtt.host);
     console.log("File :" + dbPath);
     db = new sqlite3.Database(dbPath);
     db_initalized = true;
+
+    console.log("Publish NodesDb to infra");
+    console.log(params.mqtt.host + ':' + params.mqtt.prefix + 'module_reg');
+    console.log({name:'NodesDb', type:'application'});
+    client.on('connect', function () {
+      // Publish itself
+      client.publish(
+        params.mqtt.prefix + 'module_reg',
+        JSON.stringify({name:'NodesDb', type:'application'})
+      );
+      client.end();
+    });
     console.log("Nodes Database initialized");
     console.log('-------------------------------------------');
+
   },
 
   getNodesFromDb: function(callback)
@@ -25,7 +40,7 @@ module.exports = {
       return callback(undefined);
     }
     db.serialize(function() {
-      db.all("SELECT id, node_id, last_seen FROM network_node", function(err, rows) {
+      db.all("SELECT id, node_id, node_name, last_seen FROM network_node", function(err, rows) {
         if( err !== null)
         {
           console.log("ERR: " + err);
@@ -200,5 +215,33 @@ module.exports = {
       }
     });
     stmt.finalize();
+  },
+
+  runQuery: function(query, callback){
+    if(db === null || db_initalized === false){
+      winston.error("Database call not handled init result = " + (db_initalized===true ? "true" : "false"));
+      return callback({err: "Database not available"});
+    }
+
+    db.serialize(function() {
+      db.all(query, function(err, rows) {
+        if( err !== null)
+        {
+          console.log("ERR: " + err);
+          callback(undefined);
+          //db.close();
+          return;
+        }
+        //console.log(rows);
+        if (rows !== undefined && rows.length > 0)
+        {
+          //console.log(row.id + ": " + row.node_id + ": ", row.last_seen);
+          callback(rows);
+        }
+        else {
+          callback(undefined);
+        }
+      });
+    });;
   }
 }

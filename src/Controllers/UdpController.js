@@ -2,6 +2,7 @@ var dgram = require('dgram');
 var server = dgram.createSocket('udp4');
 var winston = require('winston');
 var broker;
+var params;
 //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
 var count = 0;
 
@@ -12,7 +13,7 @@ var recv_host = null;
 var send_host = null;
 
 module.exports = {
-  initialize: function(params, Broker)
+  initialize: function(Params, Broker)
   {
     broker = Broker;
     console.log('Starting : UdpController');
@@ -39,6 +40,9 @@ module.exports = {
     udp_server_initalized = true;
     console.log('Started  : UdpController');
     console.log('-------------------------------------------');
+    broker.publish('ReportController',
+                  {controllerName: 'UdpController'},
+                  {async: false});
   }
 }
 
@@ -68,6 +72,18 @@ server.on('message', function (message, remote) {
                      {async: true});
       // node.handleUdpNodeMessage(udp_res, date);
     }
+});
+
+server.on('error', function (err) {
+  winston.error('server error: '+ err);
+  server.close();
+});
+
+server.on('close', function (err) {
+  console.log('server close:');
+  server.close();
+  // Bind to the new server host and port
+  server.bind(recv_port, recv_host);
 });
 
 function transmitMsg(msg){

@@ -1,5 +1,5 @@
 const path = require('path');
-var mqtt = require('mqtt')
+var mqtt = require('mqtt');
 var sqlite3 = require('sqlite3').verbose();
 var winston = require('winston');
 

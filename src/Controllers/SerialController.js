@@ -10,6 +10,9 @@ module.exports = {
 
     console.log('Settings : name_port : ' + params.serial_port.name_port);
     console.log('Settings : baudrate  : ' + params.serial_port.baud_rate);
+    broker.publish('ReportController',
+                  {controllerName: 'SerialController'},
+                  {async: false});
 
     var port = new SerialPort(
       params.serial_port.name_port, {

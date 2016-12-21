@@ -7,10 +7,7 @@ var jwt = require('jwt-simple');
 var _ = require('lodash');
 var app = express();
 var winston = require('winston');
-var broker = require('mercury-broker');
 var moment = require('moment');
-
-var nodesDb = require('./Controllers/NodesDb');
 
 //{ error: 0, warn: 1, info: 2, verbose: 3, debug: 4, silly: 5 }
 winston.level = 'silly';
@@ -18,16 +15,20 @@ winston.level = 'silly';
 // Application settings
 var isWin = /^win/.test(process.platform);
 if (isWin){
-  var params = require('./Config/SettingsWindows');
+  var params = require('../config/Windows');
 }
 else{
-  var params = require('./Config/SettingsLinux');
+  var params = require('../config/Linux');
 }
+
 // Local requires
 var dbInit = require('./Config/DbInit');
+var infraRecv = require('./Infra/InfraReceiver');
 var modules = require('./Controllers/ModuleInit');
+var nodesDb = require('./Controllers/NodesDb');
 
-var run_initialize = false;
+var mdns = require('multicast-dns')()
+
 //*******************
 // 1. Parse forms & JSON in body
 //*******************
@@ -35,6 +36,10 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+
+app.get('/status', function (req, res) {
+  res.json({status: 'online', application: 'homecontroller'});
+});
 
 //****************
 // 2. Stel middleware in voor serveren van statische bestanden (HTML, CSS, images)
@@ -44,96 +49,42 @@ app.use(express.static(__dirname + '/public'));
 // routes ======================================================================
 require('./Api/routes.js')(app, nodesDb);
 require('./Api/meter_data.js')(app, nodesDb);
-
-// app.get('/api', function (req, res) {
-//     res.send('Gebruik: stuur een POST-request met user-gegevens(bv "username" en "email") naar http://localhost:3000/user')
-// });
-//
-// app.get('/nodes', function (req, res) {
-//     var page = '';
-//     pjson.version;
-//     page += '<title>Node ' + pjson.version + '</title>';
-//     page += '<head><meta http-equiv="refresh" content="5" ><style>table{font-family: arial, sans-serif;border-collapse: collapse;width: 100%;} td,th{border: 1px solid #dddddd;text-align: left;padding: 8px;}tr:nth-child(even) {background-color: #dddddd;}</style></head>';
-//     page += '<h1>Status Page</h1>';
-//
-//     nodesDb.getNodesFromDb(function(result){
-//       page += '<pre><code><br>';
-//       page += JSON.stringify(result, null, 4);
-//       page += '</code></pre>';
-//       nodesDb.getSensorValue('temperature_node', '0003', 1, function(sen_result){
-//         page += '<h2>Sensor Data</h2>';
-//         page += '<pre><code><br>';
-//         page += JSON.stringify(sen_result, null, 4);
-//         page += '</code></pre>';
-//         nodesDb.getSensorValue('temperature_node', '0002', 1, function(sen_results){
-//           page += '<h2>Sensor Data</h2>';
-//           page += '<pre><code><br>';
-//           page += JSON.stringify(sen_results, null, 4);
-//           page += '</code></pre>';
-//           res.send(page);
-//         });
-//       });
-//       return;
-//
-//       page += '<table style="width:100%"><tr><th>Node ID</th><th>db id</th><th>LatestDate</th></tr>';
-//       if(result !== undefined && result.length > 0){
-//         result.forEach(function(node){
-//           winston.error((moment() - moment(node.last_seen))/1000);
-//           // Set color if time is longer then 10 minutes
-//           if((moment() - moment(node.last_seen))/1000 >= 10*60)
-//           {
-//             page += '<tr><td><font color="green">' + node.node_id + '</td><td><font color="red">' + node.id + '</td><td><font color="red">' + moment(node.last_seen).format("YYYY-MM-DD") + ' - ' + moment(node.last_seen).format("HH:mm") + '</td>';
-//
-//           }
-//           else {
-//             page += '<tr><td><font color="green">' + node.node_id + '</td><td><font color="black">' + node.id + '</td><td>' + moment(node.last_seen).format("YYYY-MM-DD") + ' - ' + moment(node.last_seen).format("HH:mm") + '</td>';
-//           }
-//         });
-//       }
-//       page += '</table>';
-//       winston.debug(result);
-//       res.send(page);
-//     });
-// });
-//****************
-// 3. De route voor vewerken van AngularJS - POST-request
-//****************
-// var rgb = {};
-// app.post('/user', function (req, res) {
-//     // verwerk binnenkomende request. We gaan er van uit
-//     // dat de parameter 'username' en 'email' aanwezig zijn.
-//     // TODO: error checking!
-//     winston.debug(JSON.stringify(req.body));
-//     var msg = '&&{"node":"0000","rgb":[' + req.body.red + ',' + req.body.green + ',' + req.body.blue + ']}##';
-//     winston.debug('message = ' + msg);
-//
-//     broker.publish('transmitMsg',{udpMsg: msg},{async:true});
-//
-//     rgb.red = req.body.red;
-//     rgb.green = req.body.green;
-//     rgb.blue = req.body.blue;
-//     winston.debug(rgb);
-//     res.json(rgb);
-// });
+require('./Api/status/infra.js')(app);
 
 function initialize(){
   console.log('Boot Home automation server');
   console.log(JSON.stringify(params,null,4));
 
-  if(run_initialize) {
-    dbInit.initialize(params.database.nodes);
-    return;
-  }
-  else {
-    winston.log("Go here????");
-    modules.initialize(params, broker);
+  //infraRecv.initialize(params, broker);
+  dbInit.initialize(params);
 
-    // Activate website
-    app.listen(3000, function () {
-        console.log('Server gestart op poort 3000...');
-    });
-  }
+  modules.initialize(params);
+  // mdns.on('response', function(response) {
+  //   console.log('got a response packet:', response);
+  // });
+
+  // mdns.on('query', function(query) {
+  //   console.log('got a query packet:', query)
+  // });
+
+  // lets query for an A record for 'brunhilde.local'
+  //setInterval(sendNodeKeepAlive, 5000);
+  // Activate website
+  app.listen(3000, function () {
+      console.log('Server gestart op poort 3000...');
+  });
+
   winston.info("System started");
 };
 
 initialize();
+
+// function sendNodeKeepAlive() {
+// 	winston.debug('Send hartbeat');
+//   mdns.query({
+//     questions:[{
+//       name: 'esp8266.local',
+//       type: 'A'
+//     }]
+//   });
+// }

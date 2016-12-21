@@ -60,10 +60,11 @@ module.exports = {
     {
       winston.debug("_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+");
       winston.debug("Store Energy Meter readings for: " + message.nodeId);
-      winston.debug("P1 = " + message.power1 + " P4" + message.power4);
-      var energy_meter = message.power1;
-      var house_hold = message.power1 - message.power4;
-      var photo_voltaic = message.power4;
+      //winston.debug("P1 = " + message.power1 + " P4 = " + message.power4);
+      winston.debug("P2 = " + message.power2 + " P3 = " + message.power3);
+      var energy_meter = -parseInt(message.power2);
+      var photo_voltaic = parseInt(message.power3);
+      var house_hold = energy_meter - photo_voltaic;
       winston.debug("");
       winston.debug("energy_meter  = " + energy_meter);
       winston.debug("house_hold    = " + house_hold);
@@ -74,7 +75,6 @@ module.exports = {
                                      house_hold,
                                      photo_voltaic,
                                      message.date);
-      winston.debug("_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+_+");
       return "em ";
     }
     return "";

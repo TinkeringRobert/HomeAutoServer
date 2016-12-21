@@ -1,10 +1,10 @@
 # Node modules #
 ################
-src/node_modules
-src/databases
+**/node_modules
 
 # Compiled source #
 ###################
+*.db
 *.com
 *.class
 *.dll

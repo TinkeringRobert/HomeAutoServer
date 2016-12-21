@@ -7,6 +7,7 @@
 	detailController.$inject = ['$routeParams'];
 	function detailController($routeParams) {
 		var vm = this;
+		console.log($routeParams);
 		vm.name = $routeParams.name;
 		vm.id = $routeParams.id;
 	}

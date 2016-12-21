@@ -1,4 +1,3 @@
-const path = require('path');
 var winston = require('winston');
 var sqlite3 = require('sqlite3').verbose();
 
@@ -7,11 +6,9 @@ module.exports = {
     winston.info('Starting : Infra DbInit');
     winston.info('-------------------------------------------');
 		winston.info("Step 1 : Initialise database   :: " + dbFile.database.infra);
-    winston.info("Step 1 : At location           :: " + __dirname);
+    winston.info("Step 2 : At location           :: " + __dirname);
 
-    const dbPath = path.resolve(__dirname, dbFile.database.infra);
-    winston.info("Step 2 : Resolve database path :: " + dbPath);
-    var db = new sqlite3.Database(dbPath);
+    var db = new sqlite3.Database(dbFile.database.infra);
     winston.info("Step 3 : Open database at path :: " + db);
 
     db.serialize(function(err) {

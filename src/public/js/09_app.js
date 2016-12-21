@@ -8,8 +8,8 @@
 			console.log('Router');
 			$routeProvider
 				.when('/', {
-					templateUrl: 'views/09_view01.html', // Default view
-					controller: 'personController'
+					templateUrl: 'views/status.html', // Default view
+					controller: 'statusController'
 				})
 				.when('/nodes', {
 					templateUrl: 'views/09_view01.html',
@@ -26,8 +26,7 @@
 					controllerAs: 'c'
 				})
 				.when('/energy', {
-					//template: '{{e.data}}<chart title="Line chart example" xData="lineChartXData" yData="lineChartYData" xName="Month" yName="Hit" subtitle="This is an example"></chart>',
-				  templateUrl: 'views/energy_view.html',
+					templateUrl: 'views/energy_view.html',
 					controller: 'energyController',
 					controllerAs: 'e'
 				})

@@ -9,83 +9,14 @@
 	<link href="css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css"/>
 </head>
-<body ng-controller="personController">
+<body>
   <h2>Test Page W.I.P.</h2>
 	<div class="container">
-		<a href="#/nodes">Nodes </a> | <a href="#/steden">Steden </a> | <a href="#/energy">Energy </a>
+		<a href="#/Status">Status</a> | <a href="#/steden">Steden </a> | <a href="#/energy">Energy </a>
 		<!-- De view waarin de losse partials/html-bestanden geinjecteerd worden -->
 		<div ng-view></div>
 	</div>
-
-<<<<<<< HEAD
-            <form id="color-form" role="form" style="display: block;">
-              <div class="form-group">
-                  <input type="text" ng-model="vm.red" name="vm.red" id="red" tabindex="1"
-                         class="form-control"
-                         placeholder="red" value="0">
-              </div>
-              <div class="form-group">
-                  <input type="text" ng-model="vm.green" name="vm.green" id="green" tabindex="2"
-                         class="form-control"
-                         placeholder="green" value="0">
-              </div>
-              <div class="form-group">
-                    <input type="text" ng-model="vm.blue" name="vm.blue" id="blue" tabindex="3"
-                         class="form-control"
-                        placeholder="blue" value="0">
-                </div>
-                <div class="form-group">
-                    <button class="form-control btn btn-primary"
-                            ng-click="vm.doSetColor()">Set Color
-                    </button>
-                </div>
-            </form>
-            <h3>Response:</h3>
-
-            <div>{{ vm.response }}</div>
-        </div>
-    </div>
 </div>
-<script src="js/vendor/angular/angular.min.js"></script>
-<script>
-    (function () {
-        'use strict';
-
-        angular.module('myApp', [])
-                .controller('myController', myController);
-
-        myController.$inject = ['$http'];
-        function myController($http) {
-            var vm     = this;
-            vm.doSetColor = function () {
-                var url   = 'http://10.0.0.2:3000/user';
-                console.log("params:");
-                var red   = vm.red;
-                var green = vm.green;
-                var blue  = vm.blue;
-                console.log("params:" + red + ":" + green + ":" + blue);
-                $http({
-                    method  : 'post',
-                    headers : {
-                        'Content-Type' : 'application/json'
-                    },
-                    url     : url,
-                    data    : {
-                        "red"   : red,
-                        "green" : green,
-                        "blue"  : blue
-                    }
-                }).then(function (response) {
-                    console.log(response.data);
-                    vm.response = response.data;
-                }).catch(function (err) {
-                    vm.response = err;
-                });
-            }
-        }
-    })();
-</script>
-=======
 	<!-- Scripts below here -->
 	<script type="text/javascript" src="js/vendor/angular.min.js"></script>
 
@@ -97,10 +28,10 @@
 	<script type="text/javascript" src="js/vendor/angular-nvd3.min.js"></script>
 	<!-- Custom Scripts -->
 	<script type="text/javascript" src="js/09_app.js"></script>
+	<script type="text/javascript" src="js/statusController.js"></script>
 	<script type="text/javascript" src="js/09_ng_personController.js"></script>
 	<script type="text/javascript" src="js/09_ng_citiesController.js"></script>
 	<script type="text/javascript" src="js/09_ng_detailController.js"></script>
 	<script type="text/javascript" src="js/energyController.js"></script>
->>>>>>> 91828054256659044b8e36ddadffc4dbafaeb79d
 </body>
 </html>
