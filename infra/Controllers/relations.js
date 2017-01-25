@@ -28,7 +28,7 @@ module.exports = {
           winston.error("ERR: " + err);
           return callback("Err: Database call failed getAllModules");
         }
-				winston.debug(rows);
+				winston.silly(rows);
         if (rows !== undefined && rows.length > 0)
         {
           callback(null, rows);

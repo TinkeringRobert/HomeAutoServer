@@ -1,0 +1,20 @@
+{
+  "name": "portal",
+  "version": "0.0.1",
+  "description": "Portal application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Robert Kappert",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "express": "^4.12.4",
+    "file-sync": "0.0.2",
+    "lodash": "^3.10.0",
+    "moment": "^2.14.1",
+    "validator": "^6.1.0",
+    "winston": "^2.2.0"
+  }
+}

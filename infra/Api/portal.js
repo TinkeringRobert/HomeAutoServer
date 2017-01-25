@@ -1,6 +1,6 @@
 var winston = require('winston');
 var pjson = require('../package.json');
-//console.log(pjson.version);
+
 module.exports = {
 	initialize: function(params, app, infraRecv)
 	{

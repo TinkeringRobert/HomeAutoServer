@@ -1,6 +1,11 @@
 ﻿<div>
 	<h1>Energy Test Page</h1>
 	<div>
+		Household     :: {{e.actual.hh_meter}} <br>
+		Energy meter  :: {{e.actual.kwh_meter}} <br>
+		Photo Voltaic :: {{e.actual.pv_meter}}
+	</div>
+	<div>
 		<select ng-change="e.selectionChanged(selectedItem);" ng-model="selectedItem">
 			<option ng-repeat="amount in e.amounts">{{amount}}</option>
 		</select>

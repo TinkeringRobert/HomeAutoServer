@@ -17,5 +17,10 @@ module.exports = {
   serial_port: {
     name_port: '/dev/ttyACM0',
     baud_rate: 115200
+  },
+  application_port: {
+    portal: 80,
+    src: 4000,
+    infra: 5000
   }
 }

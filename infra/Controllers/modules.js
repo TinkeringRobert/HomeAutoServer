@@ -5,10 +5,9 @@ var broker;
 var haikunator = new Haikunator({
   adjectives: ['Andromeda','Antlia','Apus','Aquarius','Aquila','Ara','Aries','Auriga','Boötes','Caelum','Camelopardalis','Cancer','Canes_Venatici','Canis_Major','Canis_Minor','Capricornus','Carina','Cassiopeia','Centaurus','Cepheus','Cetus','Chamaeleon','Circinus','Columba','Coma_Berenices','Corona_Australis','Corona_Borealis','Corvus','Crater','Crux','Cygnus','Delphinus','Dorado','Draco','Equuleus','Eridanus','Fornax','Gemini','Grus','Hercules','Horologium','Hydra','Hydrus','Indus','Lacerta','Leo','Leo_Minor','Lepus','Libra','Lupus','Lynx','Lyra','Mensa','Microscopium','Monoceros','Musca','Norma','Octans','Ophiuchus','Orion','Pavo','Pegasus','Perseus','Phoenix','Pictor','Pisces','Piscis_Austrinus','Puppis','Pyxis','Reticulum','Sagitta','Sagittarius','Scorpius','Sculptor','Scutum','Serpens','Sextans','Taurus','Telescopium','Triangulum','Triangulum_Australe','Tucana','Ursa_Major','Ursa_Minor','Vela','Virgo','Volans','Vulpecula'],
   nouns: ['Alpha','Beta','Gamma','Delta','Epsilon','Zeta','Eta','Theta','Iota','Kappa','Lambda','Mu','Nu','Xi','Omicron','Pi','Rho','Sigma','Tau','Upsilon','Phi','Chi','Psi','Omega'],
-  defaults: { // class defaults
+  defaults: {
       tokenLength: 0,
       delimiter: "_"
-      // ...
   }
 });
 
@@ -53,7 +52,7 @@ module.exports = {
           winston.error("ERR: " + err);
           return callback("Err: Database call failed getAllModules");
         }
-				winston.debug(rows);
+				winston.silly(rows);
         if (rows !== undefined && rows.length > 0)
         {
           callback(null, rows);

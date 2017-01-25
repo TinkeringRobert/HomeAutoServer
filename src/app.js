@@ -70,8 +70,8 @@ function initialize(){
   // lets query for an A record for 'brunhilde.local'
   //setInterval(sendNodeKeepAlive, 5000);
   // Activate website
-  app.listen(3000, function () {
-      console.log('Server gestart op poort 3000...');
+  app.listen(params.application_port.src, function () {
+      console.log('Server gestart op poort ' + params.application_port.src);
   });
 
   winston.info("System started");

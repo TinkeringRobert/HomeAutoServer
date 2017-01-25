@@ -5,8 +5,9 @@
 
 	// 2. Maak de detailcontroller
 	//energyController.$inject = ['$routeParams'];
-	function energyController ($http, $route, $filter) {
+	function energyController ($scope, $http, $route, $filter, $interval) {
 		var vm = this;
+    vm.stop;
 		console.log('Get Da Power');
 
 		vm.options = {
@@ -61,6 +62,27 @@
 			console.log(vm.data);
 		});
 
+    vm.fight = function() {
+			console.log('initialize interval');
+			if ( angular.isDefined(vm.stop) ) return;
+
+			vm.stop = $interval(function() {
+				getMeterActual($http, function(data){
+					console.log('int: actual power');
+					console.log(data);
+					parseActualData(vm, data);
+				});
+	    }, 30000);
+		};
+
+		// Initialise data for the table
+		getMeterActual($http, function(data){
+			console.log('actual power');
+			console.log(data);
+			parseActualData(vm, data);
+			vm.fight();
+		});
+
 	  vm.selectionChanged = function(selected) {
 		   console.log('Value ' + selected + ' selected');
 			 vm.selectedItem = selected;
@@ -73,8 +95,35 @@
 			 });
 			 console.log('Should have reloaded by now');
 		}
+
+		vm.stopFight = function() {
+			console.log('try to kill interval');
+			if (angular.isDefined(vm.stop)) {
+
+				console.log('kill interval');
+				$interval.cancel(vm.stop);
+				vm.stop = undefined;
+			}
+		};
+
+		$scope.$on("$destroy", function(){
+			console.log('kill interval');
+			// Make sure that the interval is destroyed too
+			vm.stopFight();
+    });
 	}
 })();
+
+function parseActualData(vm, data){
+	vm.actual = {};
+	vm.actual.available = true;
+	vm.actual.kwh_meter = data[0].kwh_meter;
+	console.log('vm.actual.kwh_meter ' + vm.actual.kwh_meter)
+	vm.actual.hh_meter = data[0].hh_meter;
+	console.log('vm.actual.hh_meter ' + vm.actual.hh_meter)
+	vm.actual.pv_meter = data[0].pv_meter;
+	console.log('vm.actual.pv_meter ' + vm.actual.pv_meter)
+};
 
 function parseChartData(vm, $filter){
 	vm.data = [];
@@ -134,6 +183,18 @@ function parseChartData(vm, $filter){
 function getMeterData($http, amount, callback){
 	console.log('getMeterData amount ' + amount);
 	$http.get('/energymeterdata/' + amount)
+		.success(function(data){
+			return callback(data);
+		})
+		.error(function(data) {
+			console.log('Error: ' + data);
+			return callback(null);
+		});
+}
+
+function getMeterActual($http, callback){
+	console.log('getMeterActual');
+	$http.get('/energymeterdata/actual')
 		.success(function(data){
 			return callback(data);
 		})

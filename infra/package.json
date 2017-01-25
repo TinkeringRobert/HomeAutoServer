@@ -1,6 +1,6 @@
 {
   "name": "infrastructure",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Infra structure application",
   "main": "app.js",
   "scripts": {
